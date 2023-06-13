@@ -9,3 +9,4 @@ You've been asked to refactor the function `deterministicPartitionKey` in [`dpk.
 You will be graded on the exhaustiveness and quality of your unit tests, the depth of your refactor, and the level of insight into your thought process provided by the written explanation.
 
 ## Your Explanation Here
+First, I decided to rename both the file and the function to be more clear on what it's supposed to do. Inside the function itself, I tried to avoid any "if inside of an if" statements (Nested If statements). Also, I made the code shorter by removing unecessary variables declarations.
