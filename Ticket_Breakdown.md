@@ -22,15 +22,17 @@ You will be graded on the level of detail in each ticket, the clarity of the exe
  Currently, the id of each Agent on the reports we generate is their internal database id. We'd like to add the ability for Facilities to save their own custom ids for each Agent they work with and use that id when generating reports for them.
 
 ### How: 
-See subtasks CPH-02, CPH-03, CPH-04, and CPH-05.
+See subtasks CPH-02, CPH-03, CPH-04, CPH-05, and CPH-06.
 
-### Time/effort estimates (using Fibonacci task evaluation): 
-10 
+### Time/effort estimates (using Fibonacci task evaluation / 1 point equals Half day of work): 
+18
+
+
 
 ## SubTask CPH-02: (Datebase) - Add new table to store Agent customs ids
 
 ### How:
-Create a migration on `database` project to add a new table `agent_custons_id` to store new customs ids for Agents. This table must have the following fields: `id`, `custom_id`, `agent_custons_id`, `created_at`, and `updated_at`.
+Create a migration on `database` project to add a new table `agent_custons_id` to store new customs ids for Agents. This table must have the following fields: `id`, `custom_id`, `agent_id`, `created_at`, and `updated_at`.
 After creating the PR and validating it locally, send a email to `devops@clipboardhealth.com` to run the migrationin  staging and production.
 
 ### Time/effort estimates: 
@@ -39,6 +41,8 @@ After creating the PR and validating it locally, send a email to `devops@clipboa
 ### Criteria:
 Test the function locally and in staging by trying to inserting a new custon id in the table.
 Make sure locally that the down functionally works well in case of a rollback.
+
+
 
 ## SubTask CPH-03: (Backend) - Update `getShiftsByFacility` function to get the new customs ids
 
@@ -50,28 +54,43 @@ Update the query to select the `custom_id` of the `agent_custons_id` by JOINing 
 ### Criteria:
 Make sure the testGetShiftsByFacility test (https://github.com/clipboardhealth/...js#LL5C1-L5C1) is updated and contains the new `custom_id` selection.
 
-## SubTask CPH-04: (Backend) - Update `generateReport` function to include the new customs id information
-### How: 
 
-### Time/effort estimates: 
-3
 
-## SubTask CPH-05: (Backend) - Create an endpoint for Facilities owners to create and update their own customs ids
+## SubTask CPH-04: (Backend) - Create an endpoint for Facilities owners to create and update their own customs ids
 ### How: 
-Create an endpoint `POST/ facility/{facility_id}/create-agent-custom-id/{agent_id}` where a Facility admin will create a new agent_custon_id. This endpoint required a custom-id that can be passed on the body request.
+Create an endpoint `POST/ facility/{facility_id}/create-agent-custom-id/{agent_id}` to a Facility admin create a new agent_custon_id. This endpoint required a custom-id that can be passed on the body request.
 Create an endpoint `PATCH/ facility/{facility_id}/update-agent-custom-id/{agent_id}` where a Facility updates a agent_custon_id. This endpoint required the new custom_id on the body request.
 
 ### Time/effort estimates: 
-3
+5
 
 ### Criteria:
+Must create unit test to each enpoint.
+Must create middlewares files to valide id the custom_id required is being passed on.
+Test locally and make sure the table `agent_custons_id` will have a new info registed and updated.
 
-## SubTask CPH-06: (Frontend) - Create a new Tab on Facility Admin System to create and update a custom id 
+
+
+## SubTask CPH-05: (Frontend) - Create a new Tab on Facility Admin System to create and update a custom id 
 ### How: 
-Create a new Tab "Custom Id" for Facility Admins to create new ids for the agents that are registed on their shift.
-Create a new bff file to call the `POST/ facility/{facility_id}/create-agent-custom-id/{agent_id}` and `PATCH/ facility/{facility_id}/update-agent-custom-id/{agent_id}` endpoint created on task 
+Create a new Tab "Custom Id" for Facility Admins to create new custom ids for the agents that are registed on their shift.
+The Design for the new Tab can be seen at: https://www.figma.com/file/HfgfguXUTbmgSQJ4ZHLDHxg/clipboardhealth?node-id=2357%3A13844
+Create a new bff file to call the `POST/ facility/{facility_id}/create-agent-custom-id/{agent_id}` and `PATCH/ facility/{facility_id}/update-agent-custom-id/{agent_id}` endpoint created on task.
 
 ### Time/effort estimates: 
 3
 
 ### Criteria:
+Test the flow locally and make sure the table `agent_custons_id` will have a new info registed.
+
+
+
+## SubTask CPH-06: (Backend) - Update `generateReport` function to include the new customs id information
+### How: 
+At the function `generateReport`(https://github.com/clipboardhealth/...js#LL5C1-L5C1), read the new data `custom_id` comming from `getShiftsByFacility` to be display at the PDF. This new info should be displayed under the name of each Agent who worked on the Shift.
+
+### Criteria:
+Generate the PDF locally and make sure the "Custom Id" field is displayed.
+
+### Time/effort estimates: 
+3
