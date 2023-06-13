@@ -16,3 +16,32 @@ Based on the information given, break this ticket down into 2-5 individual ticke
 You will be graded on the level of detail in each ticket, the clarity of the execution plan within and between tickets, and the intelligibility of your language. You don't need to be a native English speaker, but please proof-read your work.
 
 ## Your Breakdown Here
+
+# Task CPH-01: As a Facility owner, I would like to create custom ids for each Agent and see it on the pdf reports
+Why: Currently, the id of each Agent on the reports we generate is their internal database id. We'd like to add the ability for Facilities to save their own custom ids for each Agent they work with and use that id when generating reports for them.
+
+
+How: See subtasks CPH-02, CPH-03, and CPH-04
+
+
+# SubTask CPH-02: (Datebase) - Add new table to store Agent custon ids
+
+How: 
+
+Time/effort estimates: 2
+
+# SubTask CPH-03: (Backend) - Update `getShiftsByFacility` function to get the new custons ids
+
+How:
+
+Time/effort estimates: 2
+
+# SubTask CPH-04: (Backend)  Update `generateReport` function to include the new custons id information
+How:
+
+Time/effort estimates: 3
+
+# SubTask CPH-04: (Backend)  Create an endpoint `createCustomIdByAgentId` for Facilities to create their own cusom ids
+How:
+
+Time/effort estimates: 3
